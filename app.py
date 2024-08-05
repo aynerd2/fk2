@@ -3,10 +3,9 @@ from flask import Flask, request, jsonify
 from transformers import AutoModelForImageClassification, AutoProcessor
 import torch
 from PIL import Image
-from flask_cors import CORS
+
 
 app = Flask(__name__)
-CORS(app)
 
 model_id = "Aynerd/NiaraApi"
 model = AutoModel.from_pretrained(model_id)
