@@ -22,7 +22,6 @@ def predict():
         return jsonify({'error': 'No file provided'}), 400
 
     file = request.files['file']
-
     if file:
         filepath = os.path.join(UPLOADS_FOLDER, file.filename)
         file.save(filepath)
@@ -38,13 +37,18 @@ def predict():
             predicted_class = np.argmax(predictions[0])
             confidence = float(np.max(predictions[0]))
 
-            return jsonify({'class': int(predicted_class), 'confidence': confidence})
-        finally:
             # Clean up: remove the temporary file
             if os.path.exists(filepath):
                 os.remove(filepath)
 
+            return jsonify({'class': int(predicted_class), 'confidence': confidence})
+
+        except Exception as e:
+            # Handle any exceptions during prediction
+            return jsonify({'error': str(e)}), 400
+
     return jsonify({'error': 'File not readable'}), 400
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host='0.0.0.0', port=5000, debug=True)  # Set debug=True for development
+
