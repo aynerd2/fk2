@@ -4,14 +4,11 @@ from transformers import AutoModelForImageClassification, AutoProcessor
 import torch
 from PIL import Image
 
-
 app = Flask(__name__)
 
 model_id = "Aynerd/NiaraApi"
-model = AutoModel.from_pretrained(model_id)
-
-AutoModelForImageClassification.from_pretrained(model_name)
-processor = AutoProcessor.from_pretrained(model_name)
+model = AutoModelForImageClassification.from_pretrained(model_id)
+processor = AutoProcessor.from_pretrained(model_id)
 
 UPLOADS_FOLDER = '/tmp/uploads'
 
@@ -46,4 +43,4 @@ def predict():
     return jsonify({'error': 'File not readable'}), 400
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', debug=False)
+    app.run(host='0.0.0.0', port=5000, debug=False)
